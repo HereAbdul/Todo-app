@@ -46,10 +46,11 @@ addBtn.addEventListener('click', e => {
         //make div
         const mainDiv = document.createElement('div');
         mainDiv.classList.add('todo');
+        mainDiv.draggable = 'true';
         //add li in div
         const Li = document.createElement('li');
         Li.innerText = toDoInput.value;
-        Li.classList.add('todo-item');
+
         mainDiv.appendChild(Li);
         //save to localstrage
         savelocal(toDoInput.value);
@@ -92,8 +93,8 @@ addBtn.addEventListener('click', e => {
         //clear after add item
         toDoInput.value = '';
     }
-
 })
+  
 function savelocal(todo) {
     let todos;
     if (localStorage.getItem('todos') === null) {
@@ -108,7 +109,6 @@ function savelocal(todo) {
 }
 
 window.onload = function getTodos() {
-    //Check: if item/s are there;
     let todos;
     if (localStorage.getItem('todos') === null) {
         todos = [];
@@ -118,20 +118,18 @@ window.onload = function getTodos() {
     }
 
     todos.forEach(function (todo) {
-        //make div
+
         const mainDiv = document.createElement('div');
         mainDiv.classList.add('todo');
-        //add li in div
+        mainDiv.draggable = true;
         const Li = document.createElement('li');
 
         Li.innerText = todo;
         Li.classList.add('todo-item');
-        mainDiv.appendChild(Li);
-
-        //add some btns in div
+        mainDiv.appendChild(Li)
         const btnDiv = document.createElement('div');
         btnDiv.classList.add('btn-div')
-        //check btn
+
         const checked = document.createElement('button');
         checked.innerHTML = '<i class="fas fa-check"></i>';
         checked.classList.add('check-btn');
@@ -140,7 +138,7 @@ window.onload = function getTodos() {
             const checkParent = checked.parentElement
             checkParent.parentElement.classList.toggle("completed");
         })
-        // delete btn;
+
         const deleted = document.createElement('button');
         deleted.innerHTML = '<i class="fas fa-trash"></i>';
         deleted.classList.add('delete-btn');
@@ -149,7 +147,7 @@ window.onload = function getTodos() {
             const delParent = deleted.parentElement;
             delParent.parentElement.remove(delParent);
         })
-        // edit btn;
+
         const edit = document.createElement('button');
         edit.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
         edit.classList.add('edit-btn');
@@ -159,13 +157,13 @@ window.onload = function getTodos() {
             const editParent = edit.parentElement;
             editParent.parentElement.remove();
         })
-        //append in the divs
+
         mainDiv.appendChild(btnDiv);
         toDoList.appendChild(mainDiv);
     });
 }
 function removefromLocalStarage(del_List) {
-    //Check: if item/s are there;
+
     let todos;
     if (localStorage.getItem('todos') === null) {
         todos = [];
@@ -174,9 +172,8 @@ function removefromLocalStarage(del_List) {
         todos = JSON.parse(localStorage.getItem('todos'));
     }
     const todoIndex = todos.indexOf(del_List.children[0].innerText);
-    todos.splice(todoIndex,1);
+    todos.splice(todoIndex, 1);
     localStorage.setItem('todos', JSON.stringify(todos));
 }
 
-
-
+// drag and drop
